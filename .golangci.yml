@@ -1,0 +1,119 @@
+run:
+  go: "1.22"
+  timeout: 5m
+  build-tags:
+    - mock
+    - integration
+linters:
+  enable-all: true
+  disable:
+    - golint
+    - exhaustivestruct
+    - maligned
+    - interfacer
+    - scopelint
+    - ifshort
+    - varcheck
+    - structcheck
+    - deadcode
+    - nosnakecase
+    - varnamelen
+    - tagalign
+    - paralleltest
+    - testifylint
+    - perfsprint
+    - ireturn
+    - testpackage
+linters-settings:
+  cyclop:
+    max-complexity: 20
+  nestif:
+    min-complexity: 10  
+  misspell:
+    locale: US
+  gci:
+    sections:
+      - Standard
+      - Default
+      - Prefix(git.vseinstrumenti.net)
+  tagliatelle:
+    case:
+      use-field-name: false
+      rules:
+        json: snake
+        yaml: camel
+        xml: camel
+        bson: camel
+        avro: snake
+        mapstructure: kebab    
+  lll:
+    line-length: 140
+  exhaustruct:
+    exclude:
+      - '.*cobra\.Command.*'
+  depguard:
+    rules:
+      main:
+        allow:
+          - $gostd
+          - git.vseinstrumenti.net
+          - github.com
+        deny:
+          - pkg: "emperror.dev/errors"
+            desc: should be replaced by "github.com/pkg/errors"
+issues:
+  exclude-rules:
+    - linters:
+        - lll
+      source: "^//go:generate "
+    - path: "internal/build/healthcheck.go"
+      linters:
+        - unused
+    - path: "internal/build/shutdown.go"
+      linters:
+        - unused
+    - path: "cmd" # drop this after migration to 1.54
+      linters:
+        - nolintlint
+    - path: "pkg/mongodb" # drop this after migration to 1.54
+      linters:
+        - nolintlint
+    - path: "build/postgres.go"
+      linters:
+        - dupl
+    - path: "item/repo-postgres.go"
+      linters:
+        - dupl
+    - path: "note/repo-postgres.go"
+      linters:
+        - dupl
+    - path: "go.mod"
+      linters:
+        - gomoddirectives
+    - path: _test\.go$    
+      linters:
+        - golint
+        - exhaustivestruct
+        - maligned
+        - interfacer
+        - scopelint
+        - ifshort
+        - varcheck
+        - structcheck
+        - deadcode
+        - nosnakecase
+        - varnamelen
+        - tagalign
+        - paralleltest
+        - testifylint
+        - perfsprint
+        - ireturn
+        - testpackage
+        - tparallel
+        - gochecknoglobals
+        - exhaustruct
+        - funlen
+        - maintidx
+        - goerr113
+        - gosec
+        - dupl

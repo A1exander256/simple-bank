@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  description: API для работы с первым банком
+  title: Simple Bank API
+  version: 1.0.0
+servers:
+- description: Base path
+  url: /api
+paths:
+  /user:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_user_post_request'
+        description: Новый пользователь
+        required: true
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Клиентская ошибка
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Серверная ошибка
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_user_post_201_response'
+          description: Успешное создание пользователя
+      summary: Создание пользователя
+components:
+  schemas:
+    Error:
+      description: Объект ошибки
+      example:
+        message: произошла такая-то ошибка
+      properties:
+        message:
+          description: текстовое описание ошибки
+          example: произошла такая-то ошибка
+          type: string
+      required:
+      - message
+      type: object
+    _user_post_request:
+      properties:
+        username:
+          description: Никнейм пользователя
+          example: A1exander256
+          type: string
+        password:
+          description: Пароль пользователя
+          example: hard_password
+          format: password
+          type: string
+        email:
+          description: Почта пользователя
+          example: example_email@gmail.com
+          format: email
+          type: string
+      required:
+      - email
+      - password
+      - username
+      type: object
+    _user_post_201_response:
+      example:
+        guid: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        guid:
+          description: guid созданного пользователя
+          format: uuid
+          type: string
+      type: object

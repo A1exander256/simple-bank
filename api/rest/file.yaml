@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Simple Bank API
+  version: 1.0.0
+  description: API для работы с первым банком
+
+servers:
+  - url: /api
+    description: Base path
+
+paths:
+  /user:
+    post:
+      summary: Создание пользователя
+      requestBody:
+        required: true
+        description: Новый пользователь
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password, email]
+              properties:
+                username:
+                  description: Никнейм пользователя
+                  type: string
+                  example:  A1exander256
+                password:
+                  description: Пароль пользователя
+                  type: string
+                  format: password
+                  example: hard_password
+                email:
+                  description: Почта пользователя
+                  type: string
+                  format: email
+                  example: example_email@gmail.com 
+      responses:
+        '400':
+          description: Клиентская ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Серверная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '201':
+          description:  Успешное создание пользователя
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  guid:
+                    description: guid созданного пользователя
+                    type: string
+                    format: uuid        
+
+
+
+components:
+  schemas:
+    Error:
+      type: object
+      description: Объект ошибки
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: текстовое описание ошибки
+          example: "произошла такая-то ошибка"              

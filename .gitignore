@@ -1,0 +1,15 @@
+.*
+
+!.terraform
+!.docker
+!/.gitignore
+!/.gitattributes
+!/.golangci.yml
+!/.gitlab-ci.yml
+!/.pre-commit-config.yaml
+!/.mockery.yaml
+*__debug_bin*
+*.key
+/bin
+go.work
+go.work.sum

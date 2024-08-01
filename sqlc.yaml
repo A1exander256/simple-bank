@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - schema: "internal/migration/postgres"
+    queries: "internal/repo/sqlc/postgres"
+    engine: "postgresql"
+    gen:
+      go:
+        package: "query"
+        out: "internal/repo/sqlc/postgres/query"
+        emit_prepared_queries: true
