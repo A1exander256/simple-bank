@@ -6,6 +6,7 @@ import (
 
 	"github.com/A1exander256/simple-bank/internal/migration"
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres" // driver
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	_ "github.com/jackc/pgx/stdlib" // driver
 	"github.com/jmoiron/sqlx"
